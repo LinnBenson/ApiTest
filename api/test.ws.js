@@ -24,7 +24,7 @@ export default class API  {
         const send = {
             value: data.value,
             list: g.copy({
-                text: '{rand}'
+                text: '{TextCn}'
             }, Math.floor( Math.random() * ( 8 - 1 + 1 ) ) + 1 )
         };
         return this.echo( 0, send, 'getPrompt' );

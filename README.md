@@ -13,16 +13,16 @@ npm run ws
 
 ### 文件说明
 - config.js
-  配置文件，用于定义服务端口和回调延时
+  - 配置文件，用于定义服务端口和回调延时
 - api.js
-  API 服务入口
+  - API 服务入口
 - ws.js
-  Websocket 服务入口
+  - Websocket 服务入口
 - /api/generate.js
-  封装了一些用于生成测试数据的函数
+  - 封装了一些用于生成测试数据的函数
 - /api/test.api.js
-  API 回调方法
+  - API 回调方法
 - /api/test.ws.js
-  Websocket 回调方法
+  - Websocket 回调方法
 - reply/
-  此文件下的内容可以在回调方法中使用 g.file 读取
+  - 此文件下的内容可以在回调方法中使用 g.file 读取

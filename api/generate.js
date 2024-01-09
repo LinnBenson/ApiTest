@@ -27,6 +27,11 @@ const g = {
                 if ( /\{time\}/.test( newV ) ) { newV = replaceString( newV, 'time', Tool.getTime() ); }
                 // 随机布尔值
                 if ( /\{bool\}/.test( newV ) ) { newV = Math.random() < 0.4; }
+                // 随机文本
+                if ( /\{TextEn\}/.test( newV ) ) { newV = replaceString( newV, 'TextEn', this.randTxet( 'TextEn' ) ); }
+                if ( /\{TextCn\}/.test( newV ) ) { newV = replaceString( newV, 'TextCn', this.randTxet( 'TextCn' ) ); }
+                if ( /\{WordEn\}/.test( newV ) ) { newV = replaceString( newV, 'WordEn', this.randTxet( 'WordEn' ) ); }
+                if ( /\{WordCn\}/.test( newV ) ) { newV = replaceString( newV, 'WordCn', this.randTxet( 'WordCn' ) ); }
                 // 格式化数字
                 if ( /^\d+$/.test( newK ) ) { newK = parseInt( newV, 10 ); }
                 if ( /^\d+$/.test( newV ) ) { newV = parseInt( newV, 10 ); }
@@ -41,6 +46,15 @@ const g = {
         let data = ['i-buildings','i-bullseye','i-bus-front','i-c-circle','i-c-square','i-calculator','i-calendar','i-calendar-check','i-calendar-date','i-calendar-day','i-calendar-event','i-calendar-heart','i-calendar-minus','i-calendar-month','i-calendar-plus','i-calendar-range','i-calendar-week','i-calendar-x','i-calendar2','i-calendar2-check','i-calendar2-date','i-calendar2-day','i-calendar2-event','i-calendar2-heart','i-calendar2-minus','i-calendar2-month','i-calendar2-plus','i-calendar2-range','i-calendar2-week','i-calendar2-x','i-calendar3','i-calendar3-event','i-calendar3-range','i-calendar3-week','i-calendar4','i-calendar4-event','i-calendar4-range','i-calendar4-week','i-camera','i-camera2','i-camera-reels','i-camera-video','i-camera-video-off','i-capslock','i-capsule','i-capsule-pill','i-car-front','i-card-checklist','i-card-heading','i-card-image','i-card-list','i-card-text','i-caret-down','i-caret-down-square','i-caret-left','i-caret-left-square','i-caret-right','i-caret-right-square','i-caret-up','i-caret-up-square','i-cart','i-cart-check','i-cart-dash','i-cart-plus','i-cart-x','i-cart2','i-cart3','i-cart4','i-cash','i-cash-coin','i-cash-stack','i-cassette','i-cast','i-cc-circle','i-cc-square','i-chat','i-chat-dots','i-chat-heart','i-chat-left','i-chat-left-dots','i-chat-left-heart','i-chat-left-quote','i-chat-left-text','i-chat-quote','i-chat-right','i-chat-right-dots','i-chat-right-heart','i-chat-right-quote','i-chat-right-text','i-chat-square','i-chat-square-dots','i-chat-square-heart','i-chat-square-quote','i-chat-square-text','i-chat-text','i-check','i-check-all','i-check-circle','i-check-lg','i-check-square','i-check2','i-check2-all','i-check2-circle','i-check2-square','i-chevron-bar-contract','i-chevron-bar-down','i-chevron-bar-expand','i-chevron-bar-left','i-chevron-bar-right','i-chevron-bar-up','i-chevron-compact-down','i-chevron-compact-left','i-chevron-compact-right'];
         const i = Math.floor( Math.random() * data.length );
         return data[i];
+    },
+    // 生成随机文本
+    randTxet: function( type ) {
+        const data = this.file( `data/${type}.json` );
+        if ( Tool.isArray( data ) ) {
+            const i = Math.floor( Math.random() * data.length );
+            return data[i];
+        }
+        return '';
     },
     // 获取回复文件
     file: function( name ) {
