@@ -1,5 +1,6 @@
-import Config, { Debug } from './config.js';
 import Tool from 'befunc';
+import Config, { Debug } from './config.js';
+import g from './api/generate.js';
 import API from './api/test.ws.js';
 
 // 导入依赖
@@ -21,16 +22,20 @@ server.on( 'connection', ( ws ) => {
     Debug([ '开始建立新的连接！', `=> 当前连接总数：${count}` ]);
     ws.on('message', ( message ) => {
         // 数据整理
-        Debug([ '收到新的消息：', `=> ${message}` ]);
         if ( !Tool.isJson( message ) ) {
             ws.send( Api.echo( 2, '请求消息格式必须为 JSON' ) );
+            Debug([ '收到格式不符的消息：', `=> ${message}` ]);
             return;
         }
         const GET = JSON.parse( message );
+        if ( GET['action'] !== 'heartbeat' ) {
+            Debug([ '收到新的消息：', `=> ${message}` ]);
+        }
         // 检查回调方法是否存在
         const target = GET['action'];
         if ( !Tool.isFunction( Api[target] ) ) {
             ws.send( Api.echo( 2, '回调处理方法不存在' ) );
+            Debug([ '收到无法处理的消息：', `=> ${message}` ]);
             return;
         }
         // 调用方法回复
@@ -53,5 +58,5 @@ httpServer.on( 'upgrade', (request, socket, head) => {
     });
 });
 httpServer.listen( Config.port.ws, () => {
-    console.log(`[ ${Tool.getTime()} ] Virtual WS creation service.\n=> Start: ws://localhost:${Config.port.ws}`);
+    console.log(`[ ${Tool.getTime()} ] Virtual WS creation service.\n=> Start: ws://${g.getIP( '192.168' )}:${Config.port.ws}\n`);
 });

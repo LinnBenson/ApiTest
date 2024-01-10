@@ -1,5 +1,6 @@
-import Config, { Debug } from './config.js';
 import Tool from 'befunc';
+import Config, { Debug } from './config.js';
+import g from './api/generate.js';
 import API from './api/test.api.js';
 
 // 导入依赖
@@ -25,6 +26,7 @@ app.all( '*', multer().none(), ( req, res ) => {
     const target = Url.replace( /\//g, '' );
     if ( !Tool.isFunction( Api[target] ) ) {
         res.json( Api.echo( 2, '回调处理方法不存在' ) );
+        Debug([ '收到无法处理的请求：', `=> ${Url}` ]);
         return;
     }
     // 调用方法回复
@@ -40,5 +42,5 @@ app.all( '*', multer().none(), ( req, res ) => {
 
 // 启动服务器
 app.listen( Config.port.api, () => {
-	console.log( `[ ${Tool.getTime()} ] Virtual API creation service.\n=> Start: http://localhost:${Config.port.api}` );
+	console.log( `[ ${Tool.getTime()} ] Virtual API creation service.\n=> Start: http://${g.getIP( '192.168' )}:${Config.port.api}\n` );
 });

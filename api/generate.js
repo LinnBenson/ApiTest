@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import Tool from 'befunc';
 
 const g = {
@@ -23,7 +24,7 @@ const g = {
                 if ( /\{rand\}/.test( newV ) ) { newV = replaceString( newV, 'rand', Tool.rand( 8 ) ); }
                 // 随机图标
                 if ( /\{icon\}/.test( newV ) ) { newV = replaceString( newV, 'icon', this.randIcon() ); }
-                // 随机时间
+                // 当前时间
                 if ( /\{time\}/.test( newV ) ) { newV = replaceString( newV, 'time', Tool.getTime() ); }
                 // 随机布尔值
                 if ( /\{bool\}/.test( newV ) ) { newV = Math.random() < 0.4; }
@@ -67,6 +68,25 @@ const g = {
             return data;
         } catch ( error ) {
             return '无法读取文件';
+        }
+    },
+    // 获取本地 IP
+    getIP: function( host ) {
+        const network = os.networkInterfaces();
+        let ip = [];
+        // 遍历网络接口
+        Object.keys( network ).forEach(( item ) => {
+            const allAdd = network[item];
+            allAdd.forEach(( ipInfo ) => {
+                if ( ipInfo.family === 'IPv4' && !ipInfo.internal ) {
+                    ip.push( ipInfo.address );
+                }
+            });
+        });
+        for ( const item of ip ) {
+            if ( item.startsWith( host ) ) {
+                return item;
+            }
         }
     }
 };
