@@ -32,4 +32,14 @@ export default class API  {
         };
         return this.echo( 0, send );
     }
+    blogInfo() {
+        const send = {
+            sort: g.copy( {
+                id: '{i}',
+                icon: '{icon}',
+                name: '{rand}'
+            }, 4 )
+        };
+        return this.echo( 0, send );
+    }
 }

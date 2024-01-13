@@ -5,6 +5,7 @@ import Tool from 'befunc';
 const g = {
     // 复制对象
     copy: function( data, length = 1 ) {
+        if ( Tool.isArray( length ) ) { length = Math.floor(Math.random() * ( length[1] - length[0] + 1) + length[0] ); }
         let replaceString = function( string, ruleOld, ruleNew ) {
             return typeof string === 'string' ? string.replace( new RegExp( `{${ruleOld}}`, 'g' ), ruleNew ) : string;
         }
